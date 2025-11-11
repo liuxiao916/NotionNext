@@ -1,0 +1,11 @@
+version: "3"
+services:
+  notionnext-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:3000"
+    volumes:
+      - .:/app           # 将本地代码挂载到容器
+      - /app/node_modules  # 避免覆盖 node_modules

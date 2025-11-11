@@ -1,0 +1,11 @@
+FROM node:20-alpine
+
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install
+
+# 挂载源码进来时，不再 COPY 全部代码
+
+EXPOSE 3000
+
+CMD ["yarn", "dev"]

@@ -14,59 +14,54 @@ import Card from './Card'
  * @returns
  */
 export function InfoCard(props) {
-  const { siteInfo, notice } = props
-  const router = useRouter()
-  // 在文章详情页特殊处理
-  const isSlugPage = router.pathname.indexOf('/[prefix]') === 0
+  const { siteInfo } = props
   const url1 = siteConfig('HEO_INFO_CARD_URL1', null, CONFIG)
   const icon1 = siteConfig('HEO_INFO_CARD_ICON1', null, CONFIG)
   const url2 = siteConfig('HEO_INFO_CARD_URL2', null, CONFIG)
   const icon2 = siteConfig('HEO_INFO_CARD_ICON2', null, CONFIG)
+
   return (
-    <Card className='wow fadeInUp bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col w-72 overflow-hidden relative'>
-      {/* 信息卡牌第一行 */}
-      <div className='flex justify-between'>
-        {/* 问候语 */}
-        <GreetingsWords />
-        {/* 头像 */}
-        <div
-          className={`${isSlugPage ? 'absolute right-0 -mt-8 -mr-6 hover:opacity-0 hover:scale-150 blur' : 'cursor-pointer'} justify-center items-center flex dark:text-gray-100 transform transitaion-all duration-200`}>
-          <LazyImage
-            src={siteInfo?.icon}
-            className='rounded-full'
-            width={isSlugPage ? 100 : 28}
-            alt={siteConfig('AUTHOR')}
-          />
-        </div>
+    <div className='info-card bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col items-center rounded-2xl p-6 shadow-lg'>
+    {/* 顶部标语 */}
+    <div className='bg-white/20 px-4 py-1 rounded-full text-sm mb-4'>
+    珍稀时间 合作共赢
+    </div>
+
+      {/* 中间头像 */}
+      <div className='relative mt-4'>
+        <LazyImage
+          src={siteInfo?.icon || '/images/testimonial.jpg'} // 你的头像路径
+          className='w-24 h-24 rounded-full border-4 border-white shadow-lg'
+          alt={siteConfig('AUTHOR')}
+        />
+        <span className='absolute -bottom-1 -right-1 text-2xl'>😆</span>
       </div>
 
-      <h2 className='text-3xl font-extrabold mt-3'>{siteConfig('AUTHOR')}</h2>
-
-      {/* 公告栏 */}
-      <Announcement post={notice} style={{ color: 'white !important' }} />
-
-      <div className='flex justify-between'>
-        <div className='flex space-x-3  hover:text-black dark:hover:text-white'>
-          {/* 两个社交按钮 */}
-          {url1 && (
-            <div className='w-10 text-center bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-              <SmartLink href={url1}>
-                <i className={icon1} />
-              </SmartLink>
-            </div>
-          )}
-          {url2 && (
-            <div className='bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-              <SmartLink href={url2}>
-                <i className={icon2} />
-              </SmartLink>
-            </div>
-          )}
+        <div className='mt-8 w-full flex items-center justify-between px-0'>
+        {/* 模块 A：名字 + 副标题 */}
+        <div className='flex flex-col'>
+            <span className='text-xl font-extrabold'>LIU Xiao</span>
+            <span className='text-sm opacity-80 mt-0.5'>分享科技生活</span>
         </div>
-        {/* 第三个按钮 */}
-        <MoreButton />
-      </div>
-    </Card>
+
+        {/* 模块 B：两个按钮 */}
+        <div className='flex gap-3'>
+            <a
+            href='https://www.zhihu.com/people/wen-dao-zhu-yao-33'
+            className='flex items-center justify-center w-10 h-10 bg-white/20 rounded-full hover:bg-white/40 transition-all'
+            >
+            <i className='fa-brands fa-zhihu text-white text-xl'></i>
+            </a>
+
+            <a
+            href='https://github.com/liuxiao916'
+            className='flex items-center justify-center w-10 h-10 bg-white/20 rounded-full hover:bg-white/40 transition-all'
+            >
+            <i className='fab fa-github text-white text-xl' />
+            </a>
+        </div>
+        </div>
+    </div>
   )
 }
 

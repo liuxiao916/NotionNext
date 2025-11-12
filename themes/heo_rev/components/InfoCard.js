@@ -14,21 +14,28 @@ import Card from './Card'
  * @returns
  */
 export function InfoCard(props) {
-  const { siteInfo } = props
+  const { siteInfo, notice } = props
+  const router = useRouter()
+  // 在文章详情页特殊处理
+  const isSlugPage = router.pathname.indexOf('/[prefix]') === 0
   const url1 = siteConfig('HEO_INFO_CARD_URL1', null, CONFIG)
   const icon1 = siteConfig('HEO_INFO_CARD_ICON1', null, CONFIG)
   const url2 = siteConfig('HEO_INFO_CARD_URL2', null, CONFIG)
   const icon2 = siteConfig('HEO_INFO_CARD_ICON2', null, CONFIG)
 
   return (
-    <div className='info-card bg-[#4f65f0] dark:bg-yellow-600 text-white flex flex-col items-center rounded-2xl p-6 shadow-lg'>
+    <div className='info-card bg-gradient-to-r from-sky-500 to-emerald-500 dark:bg-yellow-600 text-white flex flex-col items-center rounded-2xl p-6 shadow-lg'>
+    {/* <div className='absolute inset-0 bg-black/10'></div>  */}
+    <div className='relative z-10 flex flex-col items-center w-full'>
     {/* 顶部标语 */}
-    <div className='bg-white/20 px-4 py-1 rounded-full text-sm mb-4'>
+    {/* <div className='bg-white/20 px-4 py-1 rounded-full text-sm mb-4'>
     珍稀时间 合作共赢
-    </div>
+    </div> */}
+
+    <GreetingsWords />
 
       {/* 中间头像 */}
-      <div className='relative mt-4'>
+      <div className='relative mt-6'>
         <LazyImage
           src={siteInfo?.icon || '/images/testimonial.jpg'} // 你的头像路径
           className='w-24 h-24 rounded-full border-4 border-white shadow-lg'
@@ -37,29 +44,32 @@ export function InfoCard(props) {
         <span className='absolute -bottom-1 -right-1 text-2xl'>😆</span>
       </div>
 
-        <div className='mt-8 w-full flex items-center justify-between px-0'>
+        <div className='mt-6 w-full flex items-center justify-between px-0'>
         {/* 模块 A：名字 + 副标题 */}
         <div className='flex flex-col'>
-            <span className='text-xl font-extrabold'>LIU Xiao</span>
-            <span className='text-sm opacity-80 mt-0.5'>分享科技生活</span>
+            <span className='text-xl font-extrabold drop-shadow-sm'>LIU Xiao</span>
+            <span className='text-sm opacity-80 mt-px font-medium drop-shadow-sm'>思想在此同步更新</span>
         </div>
 
         {/* 模块 B：两个按钮 */}
-        <div className='flex gap-3'>
-            <a
-            href='https://www.zhihu.com/people/wen-dao-zhu-yao-33'
-            className='flex items-center justify-center w-10 h-10 bg-white/20 rounded-full hover:bg-white/40 transition-all'
-            >
-            <i className='fa-brands fa-zhihu text-white text-xl'></i>
-            </a>
-
-            <a
-            href='https://github.com/liuxiao916'
-            className='flex items-center justify-center w-10 h-10 bg-white/20 rounded-full hover:bg-white/40 transition-all'
-            >
-            <i className='fab fa-github text-white text-xl' />
-            </a>
+        <div className="flex gap-3">
+        {url1 && (
+            <div className="w-10 h-10 bg-white/20 rounded-full flex justify-center items-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white">
+            <SmartLink href={url1}>
+                <i className={`${icon1} text-2xl`} /> {/* 放大图标 */}
+            </SmartLink>
+            </div>
+        )}
+        {url2 && (
+            <div className="w-10 h-10 bg-white/20 rounded-full flex justify-center items-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white">
+            <SmartLink href={url2}>
+                <i className={`${icon2} text-2xl`} />
+            </SmartLink>
+            </div>
+        )}
         </div>
+        </div>
+
         </div>
     </div>
   )
@@ -79,7 +89,7 @@ function MoreButton() {
     <SmartLink href={url3}>
       <div
         className={
-          'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
+          'group bg-sky-200 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-black dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
         }>
         <ArrowRightCircle
           className={
@@ -107,7 +117,7 @@ function GreetingsWords() {
   return (
     <div
       onClick={handleChangeGreeting}
-      className=' select-none cursor-pointer py-1 px-2 bg-indigo-400 hover:bg-indigo-50  hover:text-indigo-950 dark:bg-yellow-500 dark:hover:text-white dark:hover:bg-black text-sm rounded-lg  duration-200 transition-colors'>
+      className='select-none cursor-pointer py-1 px-2 bg-white/20 hover:bg-indigo-50 font-medium hover:text-indigo-950 dark:bg-yellow-500 dark:hover:text-white dark:hover:bg-black text-sm rounded-lg  duration-200 transition-colors'>
       {greeting}
     </div>
   )

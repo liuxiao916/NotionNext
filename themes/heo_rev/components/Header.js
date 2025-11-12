@@ -144,26 +144,40 @@ const Header = props => {
             ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
             ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
             ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>
-        <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-6'>
+        <div className='relative flex h-full mx-auto justify-between items-center max-w-[86rem] px-6'>
           {/* 左侧logo */}
           <Logo {...props} />
 
-          {/* 中间菜单 */}
-          <div
-            id='nav-bar-swipe'
-            className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full`}>
-            <div
-              className={`absolute transition-all duration-700 ${activeIndex === 0 ? 'opacity-100 mt-0' : '-mt-20 opacity-0 invisible'}`}>
-              <MenuListTop {...props} />
-            </div>
-            <div
-              className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}>
-              <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
-                {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
-                {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
-              </h1>
-            </div>
-          </div>
+{/* 中间菜单（真正居中 + 有宽度） */}
+<div
+  id="nav-bar-swipe"
+  className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 h-full items-center w-max`}
+>
+  {/* 菜单态 */}
+  <div
+    className={`transition-all duration-700 ${
+      activeIndex === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-5 pointer-events-none'
+    }`}
+  >
+    {/* 包一层：水平排列 + 不换行 + 间距 + 稍粗 */}
+    <div className="flex flex-row items-center justify-center gap-6 whitespace-nowrap font-semibold text-lg">
+      <MenuListTop {...props} />
+    </div>
+  </div>
+
+  {/* 作者态（覆盖在同一位置） */}
+  <div
+    className={`absolute left-1/2 -translate-x-1/2 transition-all duration-700 ${
+      activeIndex === 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5 pointer-events-none'
+    } w-max`}
+  >
+    <h1 className="font-bold text-center text-light-400 dark:text-gray-400 whitespace-nowrap">
+      {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
+      {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
+    </h1>
+  </div>
+</div>
+
 
           {/* 右侧固定 */}
           <div className='flex flex-shrink-0 justify-end items-center w-48'>

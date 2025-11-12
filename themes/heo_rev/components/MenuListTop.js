@@ -38,6 +38,7 @@ export const MenuListTop = props => {
   // 如果 开启自定义菜单，则覆盖Page生成的菜单
   if (siteConfig('CUSTOM_MENU')) {
     links = customMenu
+    // console.log('合并后的 links:', links)
   }
 
   if (!links || links.length === 0) {
@@ -48,7 +49,7 @@ export const MenuListTop = props => {
     <>
       <nav
         id='nav-mobile'
-        className='leading-8 justify-center font-light w-full flex'>
+        className='leading-8 justify-center font-medium w-full flex'>
         {links?.map(
           (link, index) =>
             link && link.show && <MenuItemDrop key={index} link={link} />

@@ -1,3 +1,5 @@
+// Disabled for this public blog to avoid middleware invocations on every page.
+// Restore the filename to middleware.ts before enabling Clerk login or UUID_REDIRECT.
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { checkStrIsNotionId, getLastPartOfUrl } from '@/lib/utils'

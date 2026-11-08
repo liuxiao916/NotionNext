@@ -35,10 +35,15 @@ export const getServerSideProps = async ctx => {
 
   fields = getUniqueFields(fields)
 
-  // 缓存
+  // 浏览器每次验证，公共 CDN 缓存一小时，过期时允许后台刷新。
+  // 仅在数据读取成功后设置，避免将失败响应作为正常站点地图缓存。
   ctx.res.setHeader(
     'Cache-Control',
-    'public, max-age=3600, stale-while-revalidate=59'
+    'public, max-age=0, s-maxage=3600, stale-while-revalidate=600'
+  )
+  ctx.res.setHeader(
+    'Vercel-CDN-Cache-Control',
+    'public, max-age=3600, stale-while-revalidate=600'
   )
   return getServerSideSitemap(ctx, fields)
 }
